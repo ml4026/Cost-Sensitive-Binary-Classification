@@ -71,6 +71,7 @@ for (j in 1:nrow(data)){
       R.known[1] <- cost.FP * P.CkA[2]
       R.known[2] <- cost.FN * P.CkA[1]
       cost.exp.known <-min(R.known)
+      label <- which.min(R.known) * 2
       R.unknown[1] <- cost.FP * P.CkAA[2]
       R.unknown[2] <- cost.FN * P.CkAA[1]
       cost.exp.unknown[i] <-min(R.unknown)
@@ -85,11 +86,20 @@ for (j in 1:nrow(data)){
     else{
       max.attr <- A.unknown[max.arg] #Select attribute to test
     }
-    cost.exp.test <- cost.exp.test + cost.test[max.attr] #Accumulate test cost
+    cost.exp.test <- cost.exp.test + cost.test[max.attr - 1] #Accumulate test cost
     A.known <- c(A.known, max.attr) #Include new test in the known attribute
     A.unknown <- A.unknown[A.unknown != max.attr] #Exclude new test in the unknown attribute
   }
-  cost.exp[j] <- cost.exp.known + cost.exp.test
+  if (label == 2 && data[j, 11] == 4){
+    cost.mis <- cost.FP
+  }
+  else if (label == 4 && data[j, 11] == 2){
+    cost.mis <- cost.FN
+  }
+  else{
+    cost.mis <- 0
+  }
+  cost.exp[j] <- cost.mis + cost.exp.test
 }
 mean(cost.exp)
  
