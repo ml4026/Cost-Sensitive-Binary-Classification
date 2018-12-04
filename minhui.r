@@ -52,7 +52,7 @@ for (j in 1:nrow(data)){
       P.AACk <- c(1, 1) #P(A,A|Ck)
       for (ck in 1:2){
         for (attrib in A.known){ #No iterations if empty
-          P.AiCk <- sum(P.ij[attrib,] * P.VmCk[attrib,,ck])
+          P.AiCk <- sum(P.ij[attrib - 1,] * P.VmCk[attrib - 1,,ck])
           P.ACk[ck] <- P.ACk[ck] * P.AiCk 
         }
         P.AuCk <- sum(P.ij[A.unknown[i] - 1,] * P.VmCk[A.unknown[i] - 1,,ck]) #Include Attribute A.unknown[i]
@@ -74,7 +74,7 @@ for (j in 1:nrow(data)){
       R.unknown[1] <- cost.FP * P.CkAA[2]
       R.unknown[2] <- cost.FN * P.CkAA[1]
       cost.exp.unknown[i] <-min(R.unknown)
-      util[i] <- cost.exp.known - cost.exp.unknown[i] - cost.test[A.unknown[i]]
+      util[i] <- cost.exp.known - cost.exp.unknown[i] - cost.test[A.unknown[i] - 1]
     }
     max.arg <- which.max(util) #Temporary index of argmax
     max.util <- util[max.arg]
