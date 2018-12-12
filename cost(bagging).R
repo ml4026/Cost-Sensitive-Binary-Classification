@@ -13,7 +13,7 @@ data.train <- data[sampleind == 1,]
 data.val <- data[sampleind == 2,]
 
 #Initialization
-cost.test <- runif(9, min = 0, max = 100) #Test cost of each attribute
+cost.test <- runif(9, min = 0, max = 10) #Test cost of each attribute
 cost.test <- c(0, cost.test)
 cost.FP <- 1000
 cost.FN <- 1000
@@ -47,3 +47,6 @@ for (i in 1:9){
 }
 cost.exp <- cost.exp / nrow(data.val)
 cost.exp
+num <-1:9
+plot(num,cost.exp,type="o",main="Cost of Bagging",xlab="Number of Attributes",ylab="Cost",lwd=2)
+axis(1,at=seq(1,10)) 

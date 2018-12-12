@@ -47,3 +47,6 @@ for (i in 1:9){
 }
 cost.exp <- cost.exp / nrow(data.val)
 cost.exp
+num <-1:9
+plot(num,cost.exp,type="o",main="Cost of Logistic Regression",xlab="Number of Attributes",ylab="Cost",lwd=2)
+axis(1,at=seq(1,10)) 
