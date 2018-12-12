@@ -9,22 +9,23 @@ data <- na.omit(data)
 
 #Logistic Regression
 set.seed(11)
+attach(data)
 Classi=ifelse(Class==2,0,1)
 data=data.frame(data,Classi)
 glm.fits=glm(Classi~Index+CT+CellSize+CellShape+MA+SE_CellSize+BN+BC+NN+Mitoses,data=data,family=binomial)
 glm.pred=predict(glm.fits,type="response")
 glm.predict_class <- ifelse(glm.pred>0.5,1,0)
-table(result,data$Classi)
+table(glm.predict_class,data$Classi)
 
 
 #Bagging
 library(randomForest)
 set.seed(22)
-#attach(data)
+attach(data)
 Classi=ifelse(Class==2,"0","1")
 data=data.frame(data,Classi)
 bag.fit=randomForest(Classi~Index+CT+CellSize+CellShape+MA+SE_CellSize+BN+BC+NN+Mitoses,data=data,mtry=10)
-bag.pred = predict(bag.fit,data)
+bag.pred = predict(bag.fit,data,type='class')
 bag.predict_class=ifelse(bag.pred > 0.5,1,0)
 table(bag.predict_class,data$Classi)
 
