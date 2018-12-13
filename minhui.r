@@ -21,7 +21,7 @@ for (ck in 1:2){
 u = 0 #uncertainty
 #data.real <- data #Real data
 set.seed(6690)
-cost.test <- runif(9, min = 0, max = 100) #Test cost of each attribute
+cost.test <- runif(9, min = 0, max = 10) #Test cost of each attribute
 cost.FP <- 1000
 cost.FN <- 1000
 
