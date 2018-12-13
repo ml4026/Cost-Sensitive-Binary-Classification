@@ -6,6 +6,7 @@ data <- read.csv("https://archive.ics.uci.edu/ml/machine-learning-databases/brea
 data <- na.omit(data)
 data$Class <- as.factor(data$Class)
 
+#Decision Tree
 library(tree)
 model.tree <- tree(Class ~ .-Index, data = data)
 summary(model.tree)
@@ -14,6 +15,7 @@ text(model.tree)
 pred.tree <- predict(model.tree, data, type = "class")
 table(data$Class, pred.tree)
 
+#linear/radial SVM
 library(e1071)
 svmfit.linear <- svm(Class ~.-Index, data = data, kernel = "linear")
 svmfit.radial <- svm(Class ~.-Index, data = data, kernel = "radial")
@@ -22,6 +24,7 @@ table(data$Class, pred.svm.linear)
 pred.svm.radial <- predict(svmfit.radial, data)
 table(data$Class, pred.svm.radial)
 
+#neural networks
 library(neuralnet)
 data4nn <- data
 data4nn$Class <- as.numeric(data4nn$Class) - 1
